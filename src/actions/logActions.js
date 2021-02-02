@@ -39,7 +39,7 @@ export const getLogs = () => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: LOGS_ERROR,
-			payload: err.response.data,
+			payload: err.response.statusText,
 		});
 	}
 };
@@ -65,12 +65,12 @@ export const addLog = (log) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: LOGS_ERROR,
-			payload: err.response.data,
+			payload: err.response.statusText,
 		});
 	}
 };
 
-//Delete LOGS FROM SERVER
+//DELETE LOGS FROM SERVER
 export const deleteLog = (id) => async (dispatch) => {
 	try {
 		setLoading();
@@ -86,7 +86,7 @@ export const deleteLog = (id) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: LOGS_ERROR,
-			payload: err.response.data,
+			payload: err.response.statusText,
 		});
 	}
 };
@@ -113,7 +113,27 @@ export const updateLog = (log) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: LOGS_ERROR,
-			payload: err.response.data,
+			payload: err.response.statusText,
+		});
+	}
+};
+
+//SEARCH SERVER LOGS
+export const searchLogs = (text) => async (dispatch) => {
+	try {
+		setLoading();
+
+		const res = await fetch(`/logs?q=${text}`);
+		const data = await res.json();
+
+		dispatch({
+			type: SEARCH_LOGS,
+			payload: data,
+		});
+	} catch (err) {
+		dispatch({
+			type: LOGS_ERROR,
+			payload: err.response.statusText,
 		});
 	}
 };
