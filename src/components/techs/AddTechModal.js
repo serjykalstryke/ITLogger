@@ -10,10 +10,16 @@ const AddTechModal = ({ addTech }) => {
 
 	const onSubmit = () => {
 		if (firstName === "" || lastName === "") {
-			M.toast({ html: "Please enter a first and last name" });
+			M.toast({ html: "Please enter the first and last name" });
 		} else {
-			console.log(firstName, lastName);
-			//Clear Fields
+			addTech({
+				firstName,
+				lastName,
+			});
+
+			M.toast({ html: `${firstName} ${lastName} was added as a tech` });
+
+			// Clear Fields
 			setFirstName("");
 			setLastName("");
 		}
@@ -63,4 +69,8 @@ const AddTechModal = ({ addTech }) => {
 	);
 };
 
-export default connect()(AddTechModal);
+AddTechModal.propTypes = {
+	addTech: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addTech })(AddTechModal);
